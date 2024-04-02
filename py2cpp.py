@@ -4,10 +4,13 @@ import sys
 import openai
 
 # File paths
-API_KEYS_LOCATION = "/home/kush_satyadev/codex_py2cpp/.env" #give your actual path of .env file
-PYTHON_FILE_TO_CONVERT = "input.py"
+# give your actual path of .env file
+API_KEYS_LOCATION = "/home/kush_satyadev/codex_py2cpp/.env"
+PYTHON_FILE_TO_CONVERT = "Main.java"
 
 # Function to create a template .env file if it doesn't exist
+
+
 def create_template_ini_file():
     if not os.path.isfile(API_KEYS_LOCATION):
         with open(API_KEYS_LOCATION, 'w') as f:
@@ -21,6 +24,8 @@ def create_template_ini_file():
         sys.exit(1)
 
 # Initialize the OpenAI API
+
+
 def initialize_openai_api():
     create_template_ini_file()
     config = configparser.ConfigParser()
@@ -31,6 +36,8 @@ def initialize_openai_api():
     return openai
 
 # Generate input prompt from Python file
+
+
 def create_input_prompt(length=3000):
     inputPrompt = ''
     filename = PYTHON_FILE_TO_CONVERT
@@ -44,6 +51,8 @@ def create_input_prompt(length=3000):
     return inputPrompt
 
 # Generate completion from OpenAI Codex
+
+
 def generate_completion(input_prompt, num_tokens):
     temperature = 0.0
     response = openai.Completion.create(
@@ -58,6 +67,8 @@ def generate_completion(input_prompt, num_tokens):
     return response.choices[0].text.strip()
 
 # Write transpiled C++ code to file
+
+
 def write_cpp_file(text_response):
     file_name = PYTHON_FILE_TO_CONVERT.split(".")[0] + ".cpp"
     with open(file_name, "w") as f:
@@ -65,11 +76,15 @@ def write_cpp_file(text_response):
     print(f"Transpiled to C++: {file_name}")
 
 # Check if the generated file is compilable
+
+
 def test_cpp_compilation(cpp_file):
     exe_file = cpp_file.split(".")[0] + ".exe"
     return os.system(f"g++ {cpp_file} -o {exe_file} &> /dev/null") == 0
 
 # Iterate to find a compilable C++ solution
+
+
 def iterate_for_compilable_solution(prompt, max_iterations):
     print('Codex is looking for a compilable C++ solution ...')
     for it in range(max_iterations):
@@ -85,6 +100,7 @@ def iterate_for_compilable_solution(prompt, max_iterations):
         if it == max_iterations - 1:
             print('Unfortunately CODEX did not find a compilable solution. '
                   f'Still you can find the generated code in the file: {PYTHON_FILE_TO_CONVERT.split(".")[0]}.cpp')
+
 
 if __name__ == "__main__":
     openai = initialize_openai_api()
