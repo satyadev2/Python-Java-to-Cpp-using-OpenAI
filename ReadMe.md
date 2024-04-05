@@ -1,4 +1,4 @@
-# Python to C++ Converter using OpenAI Codex 
+# Python/Java to C++ Converter using OpenAI Codex 
 
 This script converts Python code to C++ using OpenAI Codex. It utilizes the GPT-3.5 Turbo Instruct model to transpile Python code into equivalent C++ code.
 
